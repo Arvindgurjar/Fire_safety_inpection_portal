@@ -1,0 +1,9 @@
+
+.errors{
+    margin: -35px 2px 0px 95%;
+    font-size: 25px;
+    color: red;
+}
+ul::-webkit-scrollbar {
+    display: none;
+  }
