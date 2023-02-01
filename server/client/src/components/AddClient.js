@@ -22,10 +22,42 @@ function AddClient() {
     setclient({ ...client, [name]: value })
     unregister(name)
   }
-  const submitClientData = (e) => {
+  const submitClientData = async() => {
+    const {client_name,client_email,client_password,client_city,client_state,client_address,client_phone,client_other_info,client_consultant_id} = client
+    try {
+      const res = await fetch("api/client/create",{
+        method:"POST",
+        headers:{
+          "Content-Type" :"application/json"
+        },
+        body:JSON.stringify({
+          client_name,client_email,client_password,client_city,client_state,client_address,client_phone,client_other_info,client_consultant_id
+        })
+      })
+      if(res.status===201)
+      {alert("Data Saved Successfully");
+      setclient({
+        client_name: "",
+        client_email: "",
+        client_password: "",
+        client_city: "",
+        client_state: "",
+        client_address: "",
+        client_phone: "",
+        client_other_info: "",
+        client_consultant_id: "",
+      })
+      }
+      else{
+        alert("Data Not Saved ");
+      }
+      return true
+      
+    } catch (error) {
+      console.log(error)
+    }
 
-    console.log(client)
-    return false
+    
   }
   return (
     <div>

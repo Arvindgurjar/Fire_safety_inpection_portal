@@ -68,6 +68,7 @@ const ClientSchema = new mongoose.Schema({
     client_phone:{
         type:String,
         required:true,
+        unique:true,
         validate(value){
             if(!(/^[0-9]{10}$/).test(value))
             {

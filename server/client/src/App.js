@@ -5,6 +5,7 @@ import './App.css';
 function App() {
   return (
     <>
+    <AddClient/><br/><br/><br/><br/><br/><br/>
     <ClientTable/>
     </>
   );
