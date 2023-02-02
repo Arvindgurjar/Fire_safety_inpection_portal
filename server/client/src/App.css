@@ -7,3 +7,9 @@
 ul::-webkit-scrollbar {
     display: none;
   }
+.nav-link:active{
+    color: aliceblue;
+}
+.nav-link{
+    color: black;
+}

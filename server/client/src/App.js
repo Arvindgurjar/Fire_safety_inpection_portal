@@ -1,12 +1,13 @@
-import AddClient from './components/AddClient';
-import ClientTable from "./components/ClientTable"
+
+import ClientModule from './components/ClientModule';
 import './App.css';
 
 function App() {
   return (
     <>
-    <AddClient/><br/><br/><br/><br/><br/><br/>
-    <ClientTable/>
+
+      <ClientModule />
+
     </>
   );
 }

@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import "../App.css"
 import { useForm } from "react-hook-form"
 
+
 function AddClient() {
+  
   const { register, unregister, handleSubmit, formState: { errors } } = useForm()
   const [client, setclient] = useState({
     client_name: "",
@@ -19,52 +21,53 @@ function AddClient() {
   const setFieldData = (e) => {
     name = e.target.name
     value = e.target.value
-    setclient({ ...client, [name]: value })
+    setclient({ ...client, [name]: value})
     unregister(name)
   }
-  const submitClientData = async() => {
-    const {client_name,client_email,client_password,client_city,client_state,client_address,client_phone,client_other_info,client_consultant_id} = client
+  const submitClientData = async () => {
+    const { client_name, client_email, client_password, client_city, client_state, client_address, client_phone, client_other_info, client_consultant_id } = client
     try {
-      const res = await fetch("api/client/create",{
-        method:"POST",
-        headers:{
-          "Content-Type" :"application/json"
+      const res = await fetch("api/client/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
         },
-        body:JSON.stringify({
-          client_name,client_email,client_password,client_city,client_state,client_address,client_phone,client_other_info,client_consultant_id
+        body: JSON.stringify({
+          client_name, client_email, client_password, client_city, client_state, client_address, client_phone, client_other_info, client_consultant_id
         })
       })
-      if(res.status===201)
-      {alert("Data Saved Successfully");
-      setclient({
-        client_name: "",
-        client_email: "",
-        client_password: "",
-        client_city: "",
-        client_state: "",
-        client_address: "",
-        client_phone: "",
-        client_other_info: "",
-        client_consultant_id: "",
-      })
+      if (res.status === 201) {
+        alert("Data Saved Successfully");
+        setclient({
+          client_name: "",
+          client_email: "",
+          client_password: "",
+          client_city: "",
+          client_state: "",
+          client_address: "",
+          client_phone: "",
+          client_other_info: "",
+          client_consultant_id: ""
+        })
+        
       }
-      else{
+      else {
         alert("Data Not Saved ");
       }
       return true
-      
+
     } catch (error) {
       console.log(error)
     }
 
-    
+
   }
   return (
-    <div>
-      <p style={{ fontSize: 13, fontWeight: 'bolder' }} className="mt-3">Add New Client</p>
+    <div className='m-3'>
+      <p style={{ fontSize: 13, fontWeight: 'bolder' }} className="mt-2">Add New Client</p>
       <hr style={{ marginTop: -10 }} />
       <form onSubmit={handleSubmit(submitClientData)} >
-        <div className="row mx-3">
+        <div className="row">
           <div className='col-md-6'>
             <div className="mb-3">
               <label htmlFor="client_name" className="form-label">Name:</label>
@@ -174,7 +177,7 @@ function AddClient() {
                 {...register("client_address", {
                   required: "*",
                   pattern: {
-                    value: /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/,
+                    value: /^[a-zA-Z0-9\s,'-]*$/,
                     message: "*"
                   },
                   minLength: {

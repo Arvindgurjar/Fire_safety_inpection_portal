@@ -82,7 +82,7 @@ exports.deleteClient = async (req, res) => {
 exports.deleteMultiClient = async (req, res) => {
     try {
         const { _ids}  = req.body
-        //console.log(_ids)
+        console.log(_ids)
         if (_ids.length < 1) {
             res.status(400).send("Id Is Not Valid")
         }
