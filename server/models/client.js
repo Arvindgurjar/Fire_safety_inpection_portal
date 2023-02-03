@@ -29,7 +29,6 @@ const ClientSchema = new mongoose.Schema({
     client_password:{
         type:String,
         required:true,
-        select:false,
         minLength:8,
         trim:true,
         validate(value){

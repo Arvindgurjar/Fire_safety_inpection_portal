@@ -1,9 +1,11 @@
-import React, { useEffect, useState ,useRef} from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import _ from "lodash"
 import { MdDelete, MdEdit } from "react-icons/md";
-//import {initialstate, reducer} from "./Reducer/useReducer"
+import FormFields from './FormFields';
+import { useForm } from "react-hook-form"
+
 const ClientTable = (props) => {
- // const [state,] = useReducer(reducer,initialstate)
+  const { register, handleSubmit, formState: { errors } } = useForm()
   const [pagesize, setpagesize] = useState(2)
   const [seachclient, setsearchclient] = useState("")
   const [clients, setclients] = useState([])
@@ -16,6 +18,17 @@ const ClientTable = (props) => {
   const [lindex, setlindex] = useState()
   const [ids, setids] = useState([])
   const [multiselect, setmultiselect] = useState(false)
+  const [model,setmodel] = useState(false)
+  const [editclient, seteditclient] = useState({
+    client_name: "",
+    client_email: "",
+    client_password: "",
+    client_city: "",
+    client_state: "",
+    client_address: "",
+    client_phone: "",
+    client_other_info: ""
+  })
   const temp = useRef();
 
   const getClients = async () => {
@@ -42,7 +55,7 @@ const ClientTable = (props) => {
     const startindex = (page - 1) * pagesize
     setpaginatedclients(_(clients).slice(startindex, page * pagesize).value())
     setsindex((page - 1) * pagesize + 1)
-    setlindex(page * pagesize<clients.length?page * pagesize:clients.length)
+    setlindex(page * pagesize < clients.length ? page * pagesize : clients.length)
 
   }
 
@@ -107,13 +120,43 @@ const ClientTable = (props) => {
       }
     }
   }
+
+  const setFieldData = (e) => {
+    let { name, value } = e.target
+
+    seteditclient({...editclient,[name]: value})
+
+    
+  }
+  const submit = async()=>{
+   // console.log(editclient)
+    const {client_name,client_email,client_password,client_city,client_state,client_address,client_phone,client_other_info} = editclient
+    const res = await fetch(`api/client/edit/${editclient._id}`,{
+      method:"PATCH",
+      headers:{
+        Accept:"application/json",
+        "Content-Type":"application/json"
+      },
+      credentials:"include",
+      body:JSON.stringify({
+        client_name,client_email,client_password,client_city,client_state,client_address,client_phone,client_other_info
+      })
+    })
+    if(res.status===201){
+    alert(`${editclient.client_name} Data Successfully Updated`)
+    setmodel(false)}
+    else{
+      alert("Oh! Please Update User");
+    }
+  }
+
   temp.current = getClients
   useEffect(() => {
 
     temp.current()
-   //console.log(props.state)
-  },[props.state]);
-  
+   
+  }, [props.state,model]);
+
 
 
   useEffect(() => {
@@ -124,14 +167,15 @@ const ClientTable = (props) => {
       let result = tclients.filter((val) => {
         return (val.client_name.toLowerCase().includes(seachclient.toLowerCase()) || val.client_city.toLowerCase().includes(seachclient.toLowerCase()) || val.client_state.toLowerCase().includes(seachclient.toLowerCase()) || val.client_address.toLowerCase().includes(seachclient.toLowerCase()) || val.client_email.toLowerCase().includes(seachclient.toLowerCase()))
       })
-     // console.log(result)
+      // console.log(result)
       if (result.length === 0) {
         setpaginatedclients([]);
         setsindex(0)
         setlindex(0);
         settotalclients(0);
+        setpages([1])
       }
-      else {
+      else{
         setclients(result)
         setcurrentpage(1);
         settotalclients(result.length)
@@ -139,80 +183,98 @@ const ClientTable = (props) => {
       }
     }
 
-  }, [seachclient,tclients])
+  }, [seachclient, tclients])
 
 
   const temp1 = useRef()
-  temp1.current= resultantClient
+  temp1.current = resultantClient
   useEffect(() => {
     temp1.current()
-  }, [clients,pagesize])
+  }, [clients, pagesize])
   return (
     <div className="m-3">
-
-      <div className='d-sm-flex  justify-content-between mx-4' style={{ fontSize: "14px" }}>
-        <p >Show <input type="number" value={pagesize} style={{ width: "60px" }} name="pagesize" onChange={(e) => e.target.value <= 0 ? setpagesize(1) : e.target.value < clients.length ? setpagesize(e.target.value) : setpagesize(clients.length)} /> entries</p>
-        <p>Search: <input type="search" value={seachclient} onChange={(e) => setsearchclient(e.target.value)} /></p>
-      </div>
-      {ids.length <= 1 ? <button className='btn btn-danger fw-bold ms-2' onClick={() => setmultiselect(!multiselect)}>Select Multiple</button> : <button className='btn btn-danger fw-bold ms-2' onClick={deleteMultiple}>Delete All</button>}
-      <div style={{ minWidth: "100px", height: "100%", overflow: "auto" }}>
-        <table className='table table-striped'>
-          <thead>
-            <tr>
-              {multiselect && <th className='text-center'>#</th>}
-              <th>Name</th>
-              <th>City State</th>
-              <th>Address</th>
-              <th>Contact</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              paginatedclients.map((client) => {
-                if (client != null)
-                  return (
-                    <tr key={client._id}>
-                      {multiselect && <td><div className='text-center'><input type="checkbox" value={client._id} checked={client.isChecked} onChange={(e) => handleCheck(e)} /></div></td>}
-                      <td>{client.client_name}</td>
-                      <td>{client.client_city}<br />{client.client_state}</td>
-                      <td>{client.client_address}</td>
-                      <td>{client.client_email}</td>
-                      <td>
-                        <div className='d-flex'>
-                          <div className='mx-1' style={{ height: "20px", width: "20px", backgroundColor: "blue", borderRadius: 2, textAlign: "center", }}><div style={{ color: "white", fontSize: "13px", margin: "auto" }}><MdEdit /></div></div>
-                          <div className='mx-1' style={{ height: "20px", width: "20px", backgroundColor: "red", borderRadius: 2, textAlign: "center", }} onClick={() => deleteOne(client._id)}><div style={{ color: "white", fontSize: "13px", margin: "auto" }}><MdDelete /></div></div>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                return null
-              })
-            }
-          </tbody>
-        </table>
-        <div className='d-sm-flex justify-content-between mx-4'>
-          <div>Showing {sindex} to {lindex} of {totalcliends} entries</div>
-          <nav className='d-flex justify-content-end'>
-            <ul className='pagination ' style={{ overflow: "auto", }}>
-              <li className={currentpage === 1 ? "page-item disabled" : "page-item"} onClick={() => { setcurrentpage(1 === currentpage ? 1 : currentpage - 1); paginate(1 === currentpage ? 1 : currentpage - 1) }}>
-                <p className="page-link">Previous</p>
-              </li>
-              {
-                pages.map((val, index) => {
-                  return <li className={val === currentpage ? "page-item active" : "page-item"} key={index}><p className="page-link" onClick={() => { paginate(val) }} >{val}</p></li>
-                })
-              }
-
-
-              <li className={currentpage === pages.length ? "page-item disabled" : "page-item"} onClick={() => { setcurrentpage(pages.length === currentpage ? pages.length : currentpage + 1); paginate(pages.length === currentpage ? pages.length : currentpage + 1) }}>
-                <p className="page-link" >Next</p>
-              </li>
-            </ul>
-          </nav>
+      {model && <div className="modal d-block"  tabIndex="-1">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Edit Detail Of {editclient.client_name.toUpperCase()}</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={()=>{seteditclient([]);setmodel(false)}}></button>
+            </div>
+            
+            <form className='mx-2'onSubmit={handleSubmit(submit)}>
+                <FormFields className="modal-body" client={editclient} errors={errors} register={register} setFieldData={setFieldData} />    
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={()=>{seteditclient([]);setmodel(false)}} >Close</button>
+              <button type="submit" className="btn btn-primary">Save changes</button>
+            </div>
+          </form>
         </div>
       </div>
-    </div>
+      </div>
+      }
+<div className='d-sm-flex  justify-content-between mx-4' style={{ fontSize: "14px" }}>
+  <p >Show <input type="number" value={pagesize} style={{ width: "60px" }} name="pagesize" onChange={(e) => e.target.value <= 0 ? setpagesize(1) : e.target.value < clients.length ? setpagesize(e.target.value) : setpagesize(clients.length)} disabled={paginatedclients.length!==0?false:true}/> entries</p>
+  <p>Search: <input type="search" value={seachclient} onChange={(e) => setsearchclient(e.target.value)} /></p>
+</div>
+{ ids.length <= 1 ? <button className='btn btn-danger fw-bold ms-2' onClick={() => setmultiselect(!multiselect)}>Select Multiple</button> : <button className='btn btn-danger fw-bold ms-2' onClick={deleteMultiple}>Delete All</button> }
+<div style={{ minWidth: "100px", height: "100%", overflow: "auto" }}>
+  <table className='table table-striped'>
+    <thead>
+      <tr>
+        {multiselect && <th className='text-center'>#</th>}
+        <th>Name</th>
+        <th>City State</th>
+        <th>Address</th>
+        <th>Contact</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        paginatedclients.map((client) => {
+          if (client != null)
+            return (
+              <tr key={client._id}>
+                {multiselect && <td><div className='text-center'><input type="checkbox" value={client._id} checked={client.isChecked} onChange={(e) => handleCheck(e)} /></div></td>}
+                <td>{client.client_name}</td>
+                <td>{client.client_city}<br />{client.client_state}</td>
+                <td>{client.client_address}</td>
+                <td>{client.client_email}</td>
+                <td>
+                  <div className='d-flex'>
+                    <div className='mx-1' style={{ height: "20px", width: "20px", backgroundColor: "blue", borderRadius: 2, textAlign: "center", }}><div style={{ color: "white", fontSize: "13px", margin: "auto" }} onClick={()=>{seteditclient(client);setmodel(true)}}><MdEdit /></div></div>
+                    <div className='mx-1' style={{ height: "20px", width: "20px", backgroundColor: "red", borderRadius: 2, textAlign: "center", }} onClick={() => deleteOne(client._id)}><div style={{ color: "white", fontSize: "13px", margin: "auto" }}><MdDelete /></div></div>
+                  </div>
+                </td>
+              </tr>
+            )
+          return null
+        })
+      }
+    </tbody>
+  </table>
+  <div className='d-sm-flex justify-content-between mx-4'>
+    <div>Showing {sindex} to {lindex} of {totalcliends} entries</div>
+    <nav className='d-flex justify-content-end'>
+      <ul className='pagination ' style={{ overflow: "auto", }}>
+        <li className={currentpage === 1 ? "page-item disabled" : "page-item"} onClick={() => { setcurrentpage(1 === currentpage ? 1 : currentpage - 1); paginate(1 === currentpage ? 1 : currentpage - 1) }}>
+          <p className="page-link">Previous</p>
+        </li>
+        {
+          pages.map((val, index) => {
+            return <li className={val === currentpage ? "page-item active" : "page-item"} key={index}><p className="page-link" onClick={() => { paginate(val) }} >{val}</p></li>
+          })
+        }
+
+
+        <li className={currentpage === pages.length ? "page-item disabled" : "page-item"} onClick={() => { setcurrentpage(pages.length === currentpage ? pages.length : currentpage + 1); paginate(pages.length === currentpage ? pages.length : currentpage + 1) }}>
+          <p className="page-link" >Next</p>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+    </div >
   )
 }
 
