@@ -22,6 +22,7 @@ function AddClient() {
   const setFieldData = (e) => {
     name = e.target.name
     value = e.target.value
+    //console.log(value)
     setclient({ ...client, [name]: value })
     unregister(name)
   }
@@ -48,7 +49,7 @@ function AddClient() {
           client_address: "",
           client_phone: "",
           client_other_info: "",
-          client_consultant_id: ""
+          client_consultant_id: "1234567890",
         })
 
       }

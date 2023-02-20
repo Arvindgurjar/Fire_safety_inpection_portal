@@ -2,6 +2,7 @@ const Client = require("../models/client")
 
 
 exports.createClient = async (req, res) => {
+    console.log(req.body)
     const { client_name,
         client_email,
         client_password,
@@ -44,7 +45,7 @@ exports.createClient = async (req, res) => {
 
 exports.editClient = async (req, res) => {
     const _id = req.params.id
-   // console.log(_id)
+    // console.log(_id)
     try {
         await Client.findByIdAndUpdate({ _id }, req.body)
         const updatedClient = await Client.findOne({ _id })
@@ -81,8 +82,8 @@ exports.deleteClient = async (req, res) => {
 
 exports.deleteMultiClient = async (req, res) => {
     try {
-        const { _ids}  = req.body
-        console.log(_ids)
+        const { _ids } = req.body
+        //console.log(_ids)
         if (_ids.length < 1) {
             res.status(400).send("Id Is Not Valid")
         }
