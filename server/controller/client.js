@@ -2,7 +2,7 @@ const Client = require("../models/client")
 
 
 exports.createClient = async (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
     const { client_name,
         client_email,
         client_password,

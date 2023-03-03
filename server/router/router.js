@@ -3,7 +3,7 @@ const router = express.Router()
 
 const { createClient, editClient, listClient, deleteClient, deleteMultiClient } = require("../controller/client")
 const { createProduct, editProduct, listProduct, deleteProduct, deleteMultiProduct } = require("../controller/product")
-
+const {createInspector,editInspector,listInspector,deleteInspector,deleteMultiInspector} = require("../controller/inspector")
 
 
 /*For  Client  Module*/
@@ -26,5 +26,11 @@ router.route("/product/multidelete").delete(deleteMultiProduct)
 
 
 
+/* for inpector module */
+router.route("/inspector/create").post(createInspector)
+router.route("/inspector/edit/:id").patch(editInspector)
+router.route("/inspector/list").get(listInspector)
+router.route("/inspector/delete/:id").delete(deleteInspector)
+router.route("/inspector/multidelete").delete(deleteMultiInspector)
 
 module.exports = router
