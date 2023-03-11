@@ -1,4 +1,9 @@
-
+body{
+    background-color:lightgray;
+}
+.module{
+    background-color: white;
+}
 .errors{
     margin: -35px 2px 0px 95%;
     font-size: 25px;

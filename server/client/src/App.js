@@ -1,23 +1,21 @@
 
-import ClientModule from './clientComponents/ClientModule';
-import ProductModule from "./productComponents/ProductModule"
-import { BrowserRouter,Routes ,Route} from 'react-router-dom';
+import Dashboard from './Login&Deshboard/Dashboard';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
-import InspectorModule from './inspectorComponents/inspectorModule';
+
 
 function App() {
   return (
     <>
-       
-       <BrowserRouter>
+
+      <BrowserRouter>
         <Routes>
-            <Route path='/product' element={<ProductModule/>}/>
-            <Route path='/client' element={<ClientModule/>}/>
-            <Route path='/inspector' element={<InspectorModule/>}/>
+          <Route path='/' element={<Dashboard />} />
+
 
         </Routes>
-       </BrowserRouter>
-     
+      </BrowserRouter>
+
 
     </>
   );

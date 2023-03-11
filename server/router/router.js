@@ -1,9 +1,11 @@
 const express = require("express")
 const router = express.Router()
+const {protect} = require("../middleware/auth")
 
 const { createClient, editClient, listClient, deleteClient, deleteMultiClient } = require("../controller/client")
 const { createProduct, editProduct, listProduct, deleteProduct, deleteMultiProduct } = require("../controller/product")
-const {createInspector,editInspector,listInspector,deleteInspector,deleteMultiInspector} = require("../controller/inspector")
+const { createInspector, editInspector, listInspector, deleteInspector, deleteMultiInspector } = require("../controller/inspector")
+const { adminRegister, adminLogin, adminLogout } = require("../controller/admin");
 
 
 /*For  Client  Module*/
@@ -32,5 +34,11 @@ router.route("/inspector/edit/:id").patch(editInspector)
 router.route("/inspector/list").get(listInspector)
 router.route("/inspector/delete/:id").delete(deleteInspector)
 router.route("/inspector/multidelete").delete(deleteMultiInspector)
+
+/* For Admin */
+
+router.route("/adminregister").post(protect,adminRegister);
+router.route("/adminlogin").post(adminLogin);
+router.route("/adminlogout").get(adminLogout);
 
 module.exports = router

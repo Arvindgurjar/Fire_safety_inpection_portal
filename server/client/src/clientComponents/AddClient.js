@@ -54,7 +54,7 @@ function AddClient() {
 
       }
       else {
-        alert("Data Not Saved ");
+        alert("Data Not Saved");
       }
       return true
 

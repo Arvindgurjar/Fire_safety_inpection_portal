@@ -2,6 +2,7 @@ const Product = require("../models/product")
 
 
 exports.createProduct = async (req, res) => {
+    //console.log(req.body)
     const { product_name,
         product_extinguisher_type,
         product_extinguisher_capacity,
