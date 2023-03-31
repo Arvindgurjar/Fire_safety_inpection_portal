@@ -1,117 +1,111 @@
-
-import React, { useState } from "react";
-import { Link } from 'react-router-dom'
-
-
-
-
-export default function Login() {
-
-  const [data, setdata] = useState({
-    Email: "",
-    Password: ""
+import React, { useEffect, useState } from 'react'
+import { useForm } from "react-hook-form"
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { useNavigate } from 'react-router-dom';
+import { useSignIn } from 'react-auth-kit'
+import { useIsAuthenticated } from 'react-auth-kit';
+const Login = () => {
+  const isAuthenticated = useIsAuthenticated()
+  const signIn = useSignIn()
+  const { register, handleSubmit, formState: { errors } } = useForm()
+  const [showpass, setShowPass] = useState(false)
+  const [logindetail, setLoginDetail] = useState({
+    email: "",
+    password: ""
   })
+  const navigate = useNavigate()
+  const fieldChange = (e) => {
+    let name = e.target.name
+    let value = e.target.value
 
-  const Change = (e) => {
-    let name = e.target.name, value = e.target.value
-
-    setdata({ ...data, [name]: value })
+    setLoginDetail({ ...logindetail, [name]: value });
   }
-
-
-  const onSubmit2 = async (e) => {
-    /*  let {Email,Password} = data
-       const res = await fetch("/consultants/create",{
-          method:"POST",
-          headers:{
-            Accept:"application/json",
-            "Content-Type":"application/json"
-          },
-          credentials:"include",
-          body:JSON.stringify({
-            Email,Password
-          })
+  const showPassword = () => {
+    setShowPass(!showpass);
+  }
+  const submit = async () => {
+    const { email, password } = logindetail
+    try {
+      const res = await fetch("api/adminlogin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email, password
         })
-        if(res.status===201)
-        {
-          alert("login Successfully");
+      })
+      const token = await res.json()
+      if (res.status === 200) {
+        if (signIn(
+          {
+            token: token,
+            expiresIn: (10 * 365 * 24 * 60 * 60),
+            tokenType: "Bearer",
+            authState: { email: email, password: password }
+          }
+        )) {
+          navigate("/dashboard");
+        } else {
+          navigate("/");
         }
-       */
-    e.preventDefault();
 
-    console.log(data);
+      }
 
+    } catch (error) {
+      console.log(error);
+    }
 
   }
-
-
-
-
+  useEffect(() => {
+    if (isAuthenticated()) {
+      navigate("/dashboard")
+    }
+    else {
+      navigate("/")
+    }
+  }, [])
   return (
-
-
-    <div className="App container   p-5" id='container'>
-      <div className="container mt-5  p-4" id='content'>
-        <form onSubmit={onSubmit2} className='needs-validation'>
-
-          <div>
-            <div className="form-outline mb-4 was-validated ">
-              <label className="form-label" htmlFor="email">Username or Email address</label>
-              <input className="form-control alert alert-primary" type="email" name="Email" value={data.Email} id="email" required onChange={Change}
-              /></div>
-
-
-            <div className='invalid-feedback'>
-              Enter your email
-
-            </div>
-
-          </div>
-
-          <pre>
-            <div className="form-outline mb-3 was-validated">
-              <span className="form-label" htmlFor="form2Example2">Password</span>
-              <input className="form-control alert alert-primary" name="Password" value={data.Password} type="text" required onChange={Change}></input> <br />
-
-            </div>
-            <div className='invalid-feedback'>
-              Enter your email
-
-            </div>
-          </pre>
-
-
-          <div className="row mb-3">
-            <div className="col">
-
-              <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="form2Example31" />
-                <label className="form-check-label" htmlFor="form2Example31"> Remember me </label>
+    <div>
+      <div className="container">
+        <div className="row justify-content-center mt-5">
+          <div className="col-12 col-md-6 col-lg-4 bg-white p-4" style={{ border: "2px solid gray" }}>
+            <form onSubmit={handleSubmit(submit)}>
+              <div>
+                <label htmlFor="email" className='form-label'>Email Address</label>
+                <input type="text" name="email" id="email" value={logindetail.email} className='form-control' {...register("email", {
+                  required: "*",
+                  pattern: {
+                    value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "*"
+                  }
+                })} onChange={fieldChange} />
+                {errors.email && <div className='errors'>{errors.email.message}</div>}
               </div>
-            </div>
-            <div className="col">
+              <div className='mt-3'>
+                <label htmlFor="password" className='form-label'>Password</label>
+                <input type={showpass ? "text" : "password"} name="password" id="password" value={logindetail.password} className='form-control' {...register("password", {
+                  required: "*",
+                  pattern: {
+                    value: /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+                    message: "*"
+                  },
+                  minLength: {
+                    value: 8,
+                    message: "*"
+                  }
+                })} onChange={fieldChange} />
+                <div style={{ float: 'right', marginTop: "-33px", marginRight: "20px", cursor: 'pointer' }} onClick={showPassword}>{!showpass ? <AiFillEyeInvisible /> : <AiFillEye />}</div>
+                {errors.password && <div className='errors' style={{ marginTop: "-38px" }}>{errors.password.message}</div>}
 
-
-              <Link to='/dashboard'><button type="submit" className="btn btn-primary btn-block mb-4 " >Sign in</button></Link>
-
-
-            </div>
-            <a href="/">Forgot password?</a>
+              </div>
+              <button type="submit" className='btn btn-primary mt-3' style={{ float: "right" }}>Log In</button>
+            </form>
           </div>
-
-
-
-        </form>
+        </div>
       </div>
     </div>
-
-
-
-
-
-  );
+  )
 }
 
-
-
-
+export default Login

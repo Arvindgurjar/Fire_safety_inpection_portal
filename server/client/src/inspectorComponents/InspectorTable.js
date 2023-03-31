@@ -164,10 +164,12 @@ const InspectorTable = (props) => {
   }, [props.state, model]);
 
 
-
+  var temp2 = useRef()
+  temp2.current = resultantinspector
   useEffect(() => {
     if (seachinspector === "") {
       setinspectors(tinspectors)
+      temp2.current();
     } else {
 
       let result = tinspectors.filter((val) => {

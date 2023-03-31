@@ -241,7 +241,7 @@ temp2.current = resultantproduct
                   return (
                     <tr key={product._id}>
                       {multiselect && <td style={{ height: "100%", verticalAlign: "middle" }}><div className='text-center'><input type="checkbox" value={product._id} checked={product.isChecked} onChange={(e) => handleCheck(e)} /></div></td>}
-                      <td style={{ width: "20%", height: "100%", verticalAlign: "middle" }} >{product._id}</td>
+                      <td style={{ width: "20%", height: "100%", verticalAlign: "middle" }} >{product.product_client_id}</td>
                       <td style={{ width: "20%", height: "100%", verticalAlign: "middle" }}>{product.product_name}</td>
                       <td style={{ width: "30%", height: "100%", verticalAlign: "middle" }}>{product.product_extinguisher_type}</td>
                       <td style={{ width: "20%", height: "100%", verticalAlign: "middle" }}>

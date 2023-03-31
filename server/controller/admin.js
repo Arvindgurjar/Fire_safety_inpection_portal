@@ -19,7 +19,10 @@ exports.adminRegister = async (req, res) => {
 }
 
 exports.adminLogin = async (req, res) => {
-    const { admin_email, admin_password } = req.body
+    console.log(req.body)
+    const admin_email = req.body.email
+    const admin_password = req.body.password
+    
     try {
         if (!admin_email || !admin_password) {
             res.status(400).send("Invalid Credentials")
@@ -32,8 +35,8 @@ exports.adminLogin = async (req, res) => {
         const pass_check = await bcrypt.compare(admin_password, admin.admin_password);
         if (pass_check) {
             const token = jwt.sign({ _id: admin._id }, process.env.SECRET_KEY)
-            res.cookie("Admin", token, { expires: "", httpOnly: true });
-            res.status(200).send(token);
+            //res.cookie("Admin", token, { expires:new Date(Date.now() +  (10 * 365 * 24 * 60 * 60)), httpOnly: true });
+            res.status(200).send(JSON.stringify(token));
         } else {
             res.send(404).send("Invalid credential");
         }
@@ -41,8 +44,7 @@ exports.adminLogin = async (req, res) => {
         res.status(500).send(error);
     }
 }
-
 exports.adminLogout = (req, res) => {
-    req.res.clearCookie("Admin");
+    //req.res.clearCookie("Admin");
     res.status(200).send("Logout Succesfully");
 }

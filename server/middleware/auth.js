@@ -7,11 +7,12 @@ exports.protect = async (req, res, next) => {
         let token;
         //console.log(req.headers?.cookie)
         if (req.headers?.cookie) {
-            token = req.headers?.cookie.split("=")[1];
+            token = req.headers?.cookie.split(";")[0].split("=")[1];
         }
         //console.log(token)
         const decode = jwt.verify(token, process.env.SECRET_KEY);
         const admin = await adminmodel.findOne({ _id: decode._id });
+        //console.log(admin);
         req.user = admin;
         next();
 

@@ -1,8 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ClientModule from '../clientComponents/ClientModule'
 import ProductModule from '../productComponents/ProductModule'
 import InspectorModule from '../inspectorComponents/inspectorModule'
-export default function Dashboard(props) {
+import { useNavigate } from 'react-router-dom'
+import { useSignOut } from 'react-auth-kit'
+export default function Dashboard() {
+  const navigate = useNavigate();
+  const signOut = useSignOut()
+  const Logout = async()=>{
+    
+    try {
+      const res = await fetch("api/adminlogout",{
+        method:"GET",
+        headers:{
+          Accept:"application/json",
+          "Content-Type":"application/json"
+        },
+        credentials:"include"
+      })
+      if(res.status ===200){
+        signOut();
+        navigate("/");
+      }      
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div className='m-2 module' style={{ border: "1px solid gray" }}>
       <div style={{ width: "100%", backgroundColor: "lightgrey" }}>
@@ -17,7 +40,10 @@ export default function Dashboard(props) {
             <button className="nav-link" id="pills-products-tab" data-bs-toggle="pill" data-bs-target="#pills-products" type="button" role="tab" aria-controls="pills-products" aria-selected="false">Products</button>
           </li>
           <li className="nav-item" role="presentation">
-            <button className="nav-link" id="pills-inspection-tab" data-bs-toggle="pill" data-bs-target="#pills-inspection" type="button" role="tab" aria-controls="pills-inspection" aria-selected="false">Inspection</button>
+            <button className="nav-link" id="pills-inspection-tab" data-bs-toggle="pill" data-bs-target="#pills-inspection" type="button" role="tab" aria-controls="pills-inspection" aria-selected="false">Inspector</button>
+          </li>
+          <li className='nav-item' style={{marginLeft:"auto",marginRight:"10px"}}>
+            <button className='btn btn-primary' style={{float:"right"}} onClick={Logout}>Logout</button>
           </li>
         </ul>
       </div>
@@ -27,6 +53,7 @@ export default function Dashboard(props) {
         <div className="tab-pane fade" id="pills-products" role="tabpanel" aria-labelledby="pills-products-tab" tabIndex="0" ><ProductModule /></div>
         <div className="tab-pane fade" id="pills-inspection" role="tabpanel" aria-labelledby="pills-inspection-tab" tabIndex="0"><InspectorModule /></div>
       </div>
+
     </div>
   )
 }

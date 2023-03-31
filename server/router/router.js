@@ -10,34 +10,34 @@ const { adminRegister, adminLogin, adminLogout } = require("../controller/admin"
 
 /*For  Client  Module*/
 
-router.route("/client/create").post(createClient)
-router.route("/client/edit/:id").patch(editClient)
-router.route("/client/list").get(listClient)
-router.route("/client/delete/:id").delete(deleteClient)
-router.route("/client/multidelete").delete(deleteMultiClient)
+router.route("/client/create").post(protect,createClient)
+router.route("/client/edit/:id").patch(protect,editClient)
+router.route("/client/list").get(protect,listClient)
+router.route("/client/delete/:id").delete(protect,deleteClient)
+router.route("/client/multidelete").delete(protect,deleteMultiClient)
 
 
 
 /*for Product Module*/
 
-router.route("/product/create").post(createProduct)
-router.route("/product/edit/:id").patch(editProduct)
-router.route("/product/list").get(listProduct)
-router.route("/product/delete/:id").delete(deleteProduct)
-router.route("/product/multidelete").delete(deleteMultiProduct)
+router.route("/product/create").post(protect,createProduct)
+router.route("/product/edit/:id").patch(protect,editProduct)
+router.route("/product/list").get(protect,listProduct)
+router.route("/product/delete/:id").delete(protect,deleteProduct)
+router.route("/product/multidelete").delete(protect,deleteMultiProduct)
 
 
 
 /* for inpector module */
-router.route("/inspector/create").post(createInspector)
-router.route("/inspector/edit/:id").patch(editInspector)
-router.route("/inspector/list").get(listInspector)
-router.route("/inspector/delete/:id").delete(deleteInspector)
-router.route("/inspector/multidelete").delete(deleteMultiInspector)
+router.route("/inspector/create").post(protect,createInspector)
+router.route("/inspector/edit/:id").patch(protect,editInspector)
+router.route("/inspector/list").get(protect,listInspector)
+router.route("/inspector/delete/:id").delete(protect,deleteInspector)
+router.route("/inspector/multidelete").delete(protect,deleteMultiInspector)
 
 /* For Admin */
 
-router.route("/adminregister").post(protect,adminRegister);
+router.route("/adminregister").post(adminRegister);
 router.route("/adminlogin").post(adminLogin);
 router.route("/adminlogout").get(adminLogout);
 
