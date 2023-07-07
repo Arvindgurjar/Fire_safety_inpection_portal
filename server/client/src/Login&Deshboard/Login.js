@@ -4,6 +4,7 @@ import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import { useNavigate } from 'react-router-dom';
 import { useSignIn } from 'react-auth-kit'
 import { useIsAuthenticated } from 'react-auth-kit';
+
 const Login = () => {
   const isAuthenticated = useIsAuthenticated()
   const signIn = useSignIn()
@@ -23,6 +24,7 @@ const Login = () => {
   const showPassword = () => {
     setShowPass(!showpass);
   }
+  /* call Login Api */
   const submit = async () => {
     const { email, password } = logindetail
     try {
@@ -41,22 +43,27 @@ const Login = () => {
           {
             token: token,
             expiresIn: (10 * 365 * 24 * 60 * 60),
+            
             tokenType: "Bearer",
             authState: { email: email, password: password }
           }
         )) {
           navigate("/dashboard");
         } else {
+          
           navigate("/");
         }
 
       }
 
     } catch (error) {
+      alert("Invalid Credentials");
+      
       console.log(error);
     }
 
   }
+  /* check user is already Login or not */
   useEffect(() => {
     if (isAuthenticated()) {
       navigate("/dashboard")

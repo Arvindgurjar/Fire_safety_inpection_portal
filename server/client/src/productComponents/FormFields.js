@@ -2,6 +2,7 @@ import React from 'react'
 
 const FormFields = (props) => {
     return (
+        /* Form Field of Product Module */
         <div>
             <div className="row">
                 <div className='col-md-6'>

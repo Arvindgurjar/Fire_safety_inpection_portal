@@ -30,7 +30,7 @@ const InspectorTable = (props) => {
     inspector_other_info: ""
   })
   const temp = useRef();
-  
+  /* For getting a inspector data form backend */
   const getInspectors = async () => {
     try {
       const res = await fetch("api/inspector/list", {

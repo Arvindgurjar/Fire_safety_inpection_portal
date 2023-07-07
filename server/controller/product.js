@@ -1,6 +1,6 @@
 const Product = require("../models/product")
 
-
+/* For create a new product  */
 exports.createProduct = async (req, res) => {
     //console.log(req.body)
     const { product_name,
@@ -36,7 +36,7 @@ exports.createProduct = async (req, res) => {
     }
 }
 
-
+/* For edit info of product */
 exports.editProduct = async (req, res) => {
     const _id = req.params.id
     // console.log(_id)
@@ -50,7 +50,7 @@ exports.editProduct = async (req, res) => {
 }
 
 
-
+/* for get all product info from mongo and send to frontend */
 exports.listProduct = async (req, res) => {
     try {
         const products = await Product.find();
@@ -61,7 +61,7 @@ exports.listProduct = async (req, res) => {
 }
 
 
-
+/* foe deleting single product */
 exports.deleteProduct = async (req, res) => {
     try {
         const _id = req.params.id
@@ -73,7 +73,7 @@ exports.deleteProduct = async (req, res) => {
 }
 
 
-
+/* for deleting multiple product  */
 exports.deleteMultiProduct = async (req, res) => {
     try {
         const { _ids } = req.body

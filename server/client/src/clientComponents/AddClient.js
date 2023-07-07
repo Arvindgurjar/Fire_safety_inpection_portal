@@ -19,6 +19,7 @@ function AddClient() {
     client_consultant_id: "1234567890",
   })
   let name, value
+  /* Set value in state */
   const setFieldData = (e) => {
     name = e.target.name
     value = e.target.value
@@ -26,6 +27,8 @@ function AddClient() {
     setclient({ ...client, [name]: value })
     unregister(name)
   }
+
+  /* Add new Client */
   const submitClientData = async () => {
     const { client_name, client_email, client_password, client_city, client_state, client_address, client_phone, client_other_info, client_consultant_id } = client
     try {

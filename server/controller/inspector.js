@@ -1,6 +1,6 @@
 const Inspector= require("../models/inspector")
 
-
+/* For create a new inpector registration */
 exports.createInspector = async(req, res) => {
     console.log(req.body)
     const { inspector_name,
@@ -43,7 +43,7 @@ exports.createInspector = async(req, res) => {
     }
 }
 
-
+/* for edit a inspector info */
 exports.editInspector = async (req, res) => {
     const _id = req.params.id
    // console.log(_id)
@@ -57,7 +57,7 @@ exports.editInspector = async (req, res) => {
 }
 
 
-
+/* for getting a list of inspector form mongo and send to frontend for displaying */
 exports.listInspector = async (req, res) => {
     try {
         const inspectors = await Inspector.find();
@@ -68,7 +68,7 @@ exports.listInspector = async (req, res) => {
 }
 
 
-
+/* for delete one inspector */
 exports.deleteInspector = async (req, res) => {
     try {
         const _id = req.params.id
@@ -80,7 +80,7 @@ exports.deleteInspector = async (req, res) => {
 }
 
 
-
+/* for delete multiple inspector */
 exports.deleteMultiInspector = async (req, res) => {
     try {
         const { _ids}  = req.body

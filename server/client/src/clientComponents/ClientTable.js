@@ -49,7 +49,7 @@ const ClientTable = (props) => {
       console.log(error)
     }
   }
-  //For Setting a Data In Resultant Page
+  //For Setting a Data In Particular Page
   const paginate = (page) => {
     setcurrentpage(page)
     //console.log(page)
@@ -91,7 +91,7 @@ const ClientTable = (props) => {
       console.log(error)
     }
   }
-
+ /* For set ids for multiple deletion */
   const handleCheck = (e) => {
     const { value, checked } = e.target
     if (checked) {
@@ -125,6 +125,8 @@ const ClientTable = (props) => {
     }
   }
 
+  /* set form data into states */
+
   const setFieldData = (e) => {
     let { name, value } = e.target
 
@@ -155,7 +157,7 @@ const ClientTable = (props) => {
       alert("Oh! Please Update User");
     }
   }
-
+  /* For removing dependencied warning */
   temp.current = getClients
   useEffect(() => {
 
@@ -201,6 +203,7 @@ temp2.current = resultantClient;
   }, [clients, pagesize])
   return (
     <div className="m-3">
+      {/* Model box for edit */}
       {model && <div className="modal d-block" tabIndex="-1">
         <div className="modal-dialog">
           <div className="modal-content">

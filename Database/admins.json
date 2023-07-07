@@ -1,0 +1,9 @@
+[{
+  "_id": {
+    "$oid": "640c4ed86d05e319074bc99b"
+  },
+  "admin_email": "asdf@gmail.com",
+  "admin_phone": "3456787654",
+  "admin_password": "$2b$10$R/DzC4wC/JjzdhMQ4smDhOCokQQd6McDW7vSsJHgv9EGMMVT/a002",
+  "__v": 0
+}]

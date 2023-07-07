@@ -49,7 +49,7 @@ const ProductTable = (props) => {
       console.log(error)
     }
   }
-  //For Setting a Data In Resultant Page
+  //For Setting a Data In Particular Page
   const paginate = (page) => {
     setcurrentpage(page)
     //console.log(page)

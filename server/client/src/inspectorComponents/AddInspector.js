@@ -19,6 +19,8 @@ function AddInspector() {
     inspector_consultant_id: "1234567890",
   })
   let name, value
+
+  
   const setFieldData = (e) => {
     name = e.target.name
     value = e.target.value
@@ -26,6 +28,7 @@ function AddInspector() {
     setinspector({ ...inspector, [name]: value })
     unregister(name)
   }
+  /* for add new inspector */
   const submitInspectorData = async () => {
     const { inspector_name, inspector_email, inspector_password, inspector_city, inspector_state, inspector_address, inspector_phone, inspector_other_info, inspector_consultant_id } = inspector
     try {

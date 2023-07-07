@@ -2,6 +2,7 @@ const adminmodel = require("../models/admin")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 
+/* for create a new admin registration */
 exports.adminRegister = async (req, res) => {
     const { admin_email, admin_phone, admin_password } = req.body
     try {
@@ -17,9 +18,9 @@ exports.adminRegister = async (req, res) => {
         res.status(500).send(error);
     }
 }
-
+/* for create a admin login */
 exports.adminLogin = async (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
     const admin_email = req.body.email
     const admin_password = req.body.password
     
@@ -44,6 +45,8 @@ exports.adminLogin = async (req, res) => {
         res.status(500).send(error);
     }
 }
+
+/* For create for admin logout from backend */
 exports.adminLogout = (req, res) => {
     //req.res.clearCookie("Admin");
     res.status(200).send("Logout Succesfully");

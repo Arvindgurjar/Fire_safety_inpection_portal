@@ -1,0 +1,53 @@
+[{
+  "_id": {
+    "$oid": "63fe16c33f32b804cad142fa"
+  },
+  "product_name": "wertyuikjhgfc",
+  "product_extinguisher_type": "asdfgfds",
+  "product_extinguisher_capacity": "asdfvb",
+  "product_manufactured_date": "2023-02-28",
+  "product_due_date": "2023-02-27",
+  "product_remarks": "sdfgds",
+  "product_client_id": "oiuytr5678",
+  "product_consultant_id": "3456789",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "640217457e06ae72cb8db06a"
+  },
+  "product_name": "ppppppppppppppppp",
+  "product_extinguisher_type": "huyu",
+  "product_extinguisher_capacity": "cscds",
+  "product_manufactured_date": "5675-03-06",
+  "product_due_date": "2023-02-28",
+  "product_remarks": "rtew",
+  "product_client_id": "63f747a879c2f08a1fac8e3b",
+  "product_consultant_id": "3456789",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64267ae3879884dffe12d78c"
+  },
+  "product_name": "Demo",
+  "product_extinguisher_type": "sadfg",
+  "product_extinguisher_capacity": "sadf",
+  "product_manufactured_date": "2023-03-31",
+  "product_due_date": "2023-04-07",
+  "product_remarks": "jjgyugyiujbk",
+  "product_client_id": "640217b28817792d92eac2bf",
+  "product_consultant_id": "3456789",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "64267ba0816f6440bd29d19a"
+  },
+  "product_name": "Demo1",
+  "product_extinguisher_type": "snksdjk",
+  "product_extinguisher_capacity": "mvnxkjivk",
+  "product_manufactured_date": "2023-03-31",
+  "product_due_date": "2023-03-31",
+  "product_remarks": ",kckdijcoks",
+  "product_client_id": "640217b28817792d92eac2bf",
+  "product_consultant_id": "3456789",
+  "__v": 0
+}]

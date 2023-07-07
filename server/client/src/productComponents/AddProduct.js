@@ -22,11 +22,10 @@ function AddProduct() {
   const setFieldData = (e) => {
     name = e.target.name
     value = e.target.value
-    //console.log(value+" "+name)
     setproduct({ ...product,[name]:value })
-    //console.log(product)
     unregister(name)
   }
+  /* for adding new product */
   const submitProductData = async () => {
     //console.log(product)
     const { product_name, product_extinguisher_type, product_extinguisher_capacity, product_manufactured_date, product_due_date, product_remarks, product_client_id, product_consultant_id } = product

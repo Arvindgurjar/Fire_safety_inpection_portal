@@ -1,6 +1,6 @@
 const Client = require("../models/client")
 
-
+/* For creating a new client */
 exports.createClient = async (req, res) => {
     //console.log(req.body)
     const { client_name,
@@ -42,7 +42,7 @@ exports.createClient = async (req, res) => {
     }
 }
 
-
+/* For edit any client info */
 exports.editClient = async (req, res) => {
     const _id = req.params.id
     // console.log(_id)
@@ -55,7 +55,7 @@ exports.editClient = async (req, res) => {
     }
 }
 
-
+/* for get all client from mongo and send to frontend for displying */
 
 exports.listClient = async (req, res) => {
     try {
@@ -67,7 +67,7 @@ exports.listClient = async (req, res) => {
 }
 
 
-
+/* for delete a single client */
 exports.deleteClient = async (req, res) => {
     try {
         const _id = req.params.id
@@ -79,7 +79,7 @@ exports.deleteClient = async (req, res) => {
 }
 
 
-
+/* For delete a multiple client  */
 exports.deleteMultiClient = async (req, res) => {
     try {
         const { _ids } = req.body

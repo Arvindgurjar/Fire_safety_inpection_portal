@@ -1,9 +1,13 @@
+
+/* for body color */
 body{
     background-color:lightgray;
 }
+/* For background color of all modules */
 .module{
     background-color: white;
 }
+/* For Error showing in form validation */
 .errors{
     margin: -35px 2px 0px 95%;
     font-size: 25px;

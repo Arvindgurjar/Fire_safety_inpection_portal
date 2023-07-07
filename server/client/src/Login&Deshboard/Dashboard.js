@@ -7,6 +7,8 @@ import { useSignOut } from 'react-auth-kit'
 export default function Dashboard() {
   const navigate = useNavigate();
   const signOut = useSignOut()
+
+  /* fetch api for Logout user */
   const Logout = async()=>{
     
     try {

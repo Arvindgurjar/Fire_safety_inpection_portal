@@ -41,4 +41,6 @@ router.route("/adminregister").post(adminRegister);
 router.route("/adminlogin").post(adminLogin);
 router.route("/adminlogout").get(adminLogout);
 
+
+
 module.exports = router
